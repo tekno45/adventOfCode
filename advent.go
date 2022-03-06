@@ -63,10 +63,57 @@ func toNums(input string) []int {
 	return nums
 }
 
-func main() {
+func dayOne() {
 	file, _ := ioutil.ReadFile("sweep.input")
 	input := string(file)
 	//sweep(*file)
 	nums := toNums(input)
 	window(nums)
+}
+
+func dive(lines []string) {
+	cords := make(map[string]int)
+	for line := range lines {
+		command := strings.Split(strings.TrimSpace(lines[line]), " ")
+		dir := command[0]
+		mag, _ := strconv.Atoi(command[1])
+		if dir == "up" {
+			cords["down"] = cords["down"] - mag
+			continue
+		}
+		cords[strings.TrimSpace(dir)] = cords[dir] + mag
+
+	}
+	fmt.Println(cords["down"] * cords["forward"])
+}
+
+func aim(lines []string) {
+	cords := make(map[string]int)
+	for line := range lines {
+		command := strings.Split(strings.TrimSpace(lines[line]), " ")
+		dir := command[0]
+		mag, _ := strconv.Atoi(command[1])
+		switch dir {
+		case "up":
+			cords["aim"] = cords["aim"] - mag
+		case "down":
+			cords["aim"] = cords["aim"] + mag
+		case "forward":
+			cords["forward"] = cords["forward"] + mag
+			cords["down"] = cords["aim"]*mag + cords["down"]
+		}
+	}
+	fmt.Println(cords["down"] * cords["forward"])
+}
+func dayTwo() {
+	file, _ := ioutil.ReadFile("dive.input")
+	input := string(file)
+	lines := strings.Split(input, "\r")
+	dive(lines)
+	aim(lines)
+
+}
+
+func main() {
+	dayTwo()
 }
