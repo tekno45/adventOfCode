@@ -10,11 +10,17 @@ import (
 )
 
 func sweep(input os.File) {
+	// Read input
 	reader := bufio.NewScanner(&input)
 	first := true
+	// Initialize counters
 	var prev int
 	var count int
+
+	// Main loop
+	//Advance scanner as iterator
 	for reader.Scan() {
+		//Intial setup, initial previous
 		if first {
 			fmt.Println("First Line: " + reader.Text())
 			prev, _ = strconv.Atoi(reader.Text())
@@ -22,15 +28,18 @@ func sweep(input os.File) {
 			continue
 		}
 
+		//Convert to  int for comparison
 		curr, err := strconv.Atoi(reader.Text())
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
+		// Compare to previous value and increase value
 		if curr > prev {
 			fmt.Println(reader.Text())
 			count++
 		}
+		// Update previous counter
 		prev = curr
 
 	}
@@ -105,6 +114,7 @@ func aim(lines []string) {
 	}
 	fmt.Println(cords["down"] * cords["forward"])
 }
+
 func dayTwo() {
 	file, _ := ioutil.ReadFile("dive.input")
 	input := string(file)
@@ -114,6 +124,19 @@ func dayTwo() {
 
 }
 
+func diag(lines []string) {
+	rows := make(map[int]int)
+	for line := range lines {
+
+	}
+}
+
+func dayThree() {
+	file, _ := ioutil.ReadFile("diagnostic.input")
+	input := string(file)
+	lines := strings.Split(input, "\r")
+	diag(lines)
+}
 func main() {
-	dayTwo()
+	dayThree()
 }
